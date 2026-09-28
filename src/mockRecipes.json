@@ -1,0 +1,26 @@
+[
+  {
+    "idMeal": "52772",
+    "strMeal": "Teriyaki Chicken Casserole",
+    "strCategory": "Chicken",
+    "strArea": "Japanese",
+    "strMealThumb": "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
+    "strInstructions": "Preheat oven to 350 F. Combine all ingredients and bake for 45 minutes until golden."
+  },
+  {
+    "idMeal": "52844",
+    "strMeal": "Lasagna Sandwiches",
+    "strCategory": "Pasta",
+    "strArea": "Italian",
+    "strMealThumb": "https://www.themealdb.com/images/media/meals/1352954553.jpg",
+    "strInstructions": "Boil noodles until al dente. Layer bread, sauce, noodles, and cheese. Toast until melted."
+  },
+  {
+    "idMeal": "52977",
+    "strMeal": "Corba Soup",
+    "strCategory": "Side",
+    "strArea": "Turkish",
+    "strMealThumb": "https://www.themealdb.com/images/media/meals/58oia61564916529.jpg",
+    "strInstructions": "Pick through the lentils. Fry the onions, add tomato paste and stock, and simmer until tender."
+  }
+]
