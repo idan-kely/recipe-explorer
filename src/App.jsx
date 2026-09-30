@@ -1,27 +1,30 @@
 import { useState } from 'react';
 import mockData from './mockRecipes.json';
+import Header from './components/Header';
+import RecipeList from './components/RecipeList';
+import RecipeDetail from './components/RecipeDetail';
 import './App.css';
 
 function App() {
+  // שמירת רשימת המתכונים מהקובץ המקומי
   const [recipes] = useState(mockData);
+
+  // ה-State שמחזיק איזה מתכון נבחר כרגע (בהתחלה ריק - null)
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   return (
     <div className="app-container">
-      <header>
-        <h1>🍳 Recipe Explorer</h1>
-      </header>
-
-      <main>
-        <h2>Available Recipes (Task 1: Local Mock)</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', padding: '20px 0' }}>
-          {recipes.map((recipe) => (
-            <div key={recipe.idMeal} style={{ border: '1px solid #ccc', borderRadius: '8px', padding: '12px', textAlign: 'center' }}>
-              <img src={recipe.strMealThumb} alt={recipe.strMeal} style={{ width: '100%', borderRadius: '6px' }} />
-              <h3>{recipe.strMeal}</h3>
-              <p>{recipe.strCategory} | {recipe.strArea}</p>
-            </div>
-          ))}
-        </div>
+      <Header />
+      <main className="main-layout">
+        <RecipeList
+          recipes={recipes}
+          selectedRecipe={selectedRecipe}
+          onSelectRecipe={setSelectedRecipe}
+        />
+        <RecipeDetail
+          recipe={selectedRecipe}
+          onClose={() => setSelectedRecipe(null)}
+        />
       </main>
     </div>
   );

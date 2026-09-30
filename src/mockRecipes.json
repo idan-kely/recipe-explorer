@@ -5,15 +5,15 @@
     "strCategory": "Chicken",
     "strArea": "Japanese",
     "strMealThumb": "https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
-    "strInstructions": "Preheat oven to 350 F. Combine all ingredients and bake for 45 minutes until golden."
+    "strInstructions": "Preheat oven to 350° F. Spray a 9x13-inch baking dish with cooking spray. Combine all ingredients in a bowl, mix thoroughly, pour into dish and bake for 30 minutes until bubbling."
   },
   {
-    "idMeal": "52844",
+    "idMeal": "52987",
     "strMeal": "Lasagna Sandwiches",
     "strCategory": "Pasta",
     "strArea": "Italian",
-    "strMealThumb": "https://www.themealdb.com/images/media/meals/1352954553.jpg",
-    "strInstructions": "Boil noodles until al dente. Layer bread, sauce, noodles, and cheese. Toast until melted."
+    "strMealThumb": "https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg",
+    "strInstructions": "Boil pasta sheets. Layer with ricotta, marinara sauce, and mozzarella between slices of toasted bread. Toast until cheese melts."
   },
   {
     "idMeal": "52977",
@@ -21,6 +21,6 @@
     "strCategory": "Side",
     "strArea": "Turkish",
     "strMealThumb": "https://www.themealdb.com/images/media/meals/58oia61564916529.jpg",
-    "strInstructions": "Pick through the lentils. Fry the onions, add tomato paste and stock, and simmer until tender."
+    "strInstructions": "Pick through lentils and rinse. Sauté onions, garlic, and carrots in olive oil. Add stock, lentils, and simmer for 40 minutes until tender. Blend until smooth."
   }
 ]
