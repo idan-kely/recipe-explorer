@@ -9,9 +9,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-   fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
       .then((response) => {
         if (!response.ok) {
           throw new Error('שגיאה בהבאת הנתונים מהשרת');
@@ -28,9 +29,16 @@ function App() {
       });
   }, []);
 
+  const filteredRecipes = recipes.filter((recipe) =>
+    recipe.strMeal.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="app-container">
-      <Header />
+      <Header
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+      />
 
       <main className="main-layout">
         {loading && <p className="status-message">טוען מתכונים...</p>}
@@ -40,7 +48,7 @@ function App() {
         {!loading && !error && (
           <>
             <RecipeList
-              recipes={recipes}
+              recipes={filteredRecipes}
               selectedRecipe={selectedRecipe}
               onSelectRecipe={setSelectedRecipe}
             />
