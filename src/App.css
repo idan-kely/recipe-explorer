@@ -16,6 +16,7 @@ body {
   padding: 30px 20px;
 }
 
+/* Header & Search */
 .header {
   text-align: center;
   margin-bottom: 30px;
@@ -32,23 +33,32 @@ body {
   max-width: 420px;
   padding: 12px 18px;
   font-size: 15px;
-  border: 1px solid #cbd5e1;
+  border: 1.5px solid #cbd5e1;
   border-radius: 25px;
   outline: none;
   background-color: #ffffff;
+  transition: all 0.2s ease;
 }
 
 .search-input:focus {
   border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
+.search-counter {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Main Layout */
 .main-layout {
   display: flex;
   gap: 24px;
   align-items: flex-start;
 }
 
-/* רשימת המתכונים בצד */
+/* Recipe List */
 .recipe-list {
   flex: 1;
   min-width: 320px;
@@ -56,12 +66,39 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 180px);
   overflow-y: auto;
   padding-right: 6px;
 }
 
-/* כרטיס מתכון */
+/* Empty Search */
+.empty-search {
+  text-align: center;
+  padding: 40px 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1.5px dashed #cbd5e1;
+}
+
+.empty-search-icon {
+  font-size: 30px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.empty-search h3 {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.empty-search p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* Recipe Card */
 .recipe-card {
   display: flex;
   align-items: center;
@@ -84,7 +121,7 @@ body {
   background-color: #eff6ff;
 }
 
-/* הגבלת גודל התמונה הקטנה ברשימה - בדיוק 65px */
+/* תמונת כרטיס קטנה ברשימה */
 .recipe-card img {
   width: 65px !important;
   height: 65px !important;
@@ -114,7 +151,7 @@ body {
   color: #64748b;
 }
 
-/* פאנל הצגת המתכון המלא */
+/* Recipe Detail Panel */
 .recipe-detail {
   flex: 1.5;
   background: #ffffff;
@@ -128,12 +165,12 @@ body {
 }
 
 .recipe-detail h2 {
-  margin: 0 0 12px 0;
+  margin: 10px 0 12px 0;
   font-size: 22px;
   color: #0f172a;
 }
 
-/* תמונה גדולה בתוך פאנל הפרטים */
+/* תמונה גדולה בתוך הפרטים */
 .recipe-detail img {
   width: 100% !important;
   max-height: 250px !important;
@@ -158,6 +195,48 @@ body {
   font-weight: 500;
 }
 
+/* Ingredients */
+.ingredients-section {
+  margin: 18px 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.ingredients-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ingredient-item {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 13px;
+}
+
+.ingredient-measure {
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.ingredient-name {
+  color: #334155;
+}
+
 .instructions-text {
   font-size: 14px;
   line-height: 1.6;
@@ -173,7 +252,7 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
-  margin-top: 16px;
+  transition: background 0.15s ease;
 }
 
 .close-btn:hover {
@@ -199,7 +278,7 @@ body {
   color: #ef4444;
 }
 
-/* התאמה למסכים קטנים (מובייל) */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .main-layout {
     flex-direction: column;

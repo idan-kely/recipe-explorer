@@ -1,12 +1,18 @@
-export default function RecipeCard({ recipe, onSelectRecipe, isSelected }) {
+export default function RecipeCard({ recipe, isSelected, onSelect }) {
   return (
     <div
       className={`recipe-card ${isSelected ? 'selected' : ''}`}
-      onClick={() => onSelectRecipe(recipe)}
+      onClick={onSelect}
     >
-      <img src={recipe.strMealThumb} alt={recipe.strMeal} />
-      <h3>{recipe.strMeal}</h3>
-      <p>{recipe.strCategory}</p>
+      <img
+        src={recipe.strMealThumb}
+        alt={recipe.strMeal}
+        className="card-thumb"
+      />
+      <div className="card-info">
+        <h3>{recipe.strMeal}</h3>
+        <span>{recipe.strCategory}</span>
+      </div>
     </div>
   );
 }

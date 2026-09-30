@@ -1,4 +1,4 @@
-export default function Header({ searchTerm, onSearchChange }) {
+export default function Header({ searchTerm, onSearchChange, totalCount }) {
   return (
     <header className="header">
       <h1>Recipe Explorer</h1>
@@ -9,6 +9,9 @@ export default function Header({ searchTerm, onSearchChange }) {
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
       />
+      <div className="search-counter">
+        Showing <strong>{totalCount}</strong> recipes
+      </div>
     </header>
   );
 }

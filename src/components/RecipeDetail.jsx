@@ -2,9 +2,22 @@ export default function RecipeDetail({ recipe, onClose }) {
   if (!recipe) {
     return (
       <div className="recipe-detail empty-state">
-        <p>Select a recipe from the list to view instructions</p>
+        <p>Select a recipe from the list to view ingredients and cooking instructions</p>
       </div>
     );
+  }
+
+  // חילוץ מצרכים וכמויות מתוך שדות ה-API
+  const ingredients = [];
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = recipe[`strIngredient${i}`];
+    const measure = recipe[`strMeasure${i}`];
+    if (ingredient && ingredient.trim()) {
+      ingredients.push({
+        name: ingredient.trim(),
+        measure: measure ? measure.trim() : '',
+      });
+    }
   }
 
   return (
@@ -26,7 +39,21 @@ export default function RecipeDetail({ recipe, onClose }) {
         <span className="tag">Area: {recipe.strArea}</span>
       </div>
 
-      <h3>Instructions:</h3>
+      {ingredients.length > 0 && (
+        <div className="ingredients-section">
+          <h3>Ingredients</h3>
+          <ul className="ingredients-list">
+            {ingredients.map((item, index) => (
+              <li key={index} className="ingredient-item">
+                <span className="ingredient-measure">{item.measure}</span>
+                <span className="ingredient-name">{item.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <h3>Instructions</h3>
       <p className="instructions-text">{recipe.strInstructions}</p>
     </div>
   );

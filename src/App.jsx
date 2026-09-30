@@ -15,7 +15,7 @@ function App() {
     fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
       .then((response) => {
         if (!response.ok) {
-          throw new Error('שגיאה בהבאת הנתונים מהשרת');
+          throw new Error('Failed to fetch recipes from server');
         }
         return response.json();
       })
@@ -38,10 +38,11 @@ function App() {
       <Header
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
+        totalCount={filteredRecipes.length}
       />
 
       <main className="main-layout">
-        {loading && <p className="status-message">טוען מתכונים...</p>}
+        {loading && <p className="status-message">Loading recipes...</p>}
 
         {error && <p className="status-message error">{error}</p>}
 
