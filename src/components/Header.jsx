@@ -5,7 +5,7 @@ export default function Header({ searchTerm, onSearchChange }) {
       <input
         type="text"
         className="search-input"
-        placeholder="חפש מתכון..."
+        placeholder="Search recipes..."
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
       />
