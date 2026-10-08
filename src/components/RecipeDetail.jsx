@@ -1,4 +1,4 @@
-export default function RecipeDetail({ recipe, onClose }) {
+export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavorite }) {
   if (!recipe) {
     return (
       <div className="recipe-detail empty-state">
@@ -7,7 +7,6 @@ export default function RecipeDetail({ recipe, onClose }) {
     );
   }
 
-  // חילוץ מצרכים וכמויות מתוך שדות ה-API
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`];
@@ -22,9 +21,17 @@ export default function RecipeDetail({ recipe, onClose }) {
 
   return (
     <div className="recipe-detail">
-      <button className="close-btn" onClick={onClose}>
-        Close ✕
-      </button>
+      <div className="detail-actions">
+        <button
+          className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
+          onClick={() => onToggleFavorite(recipe.idMeal)}
+        >
+          {isFavorite ? '❤️ Favorited' : '🤍 Add to Favorites'}
+        </button>
+        <button className="close-btn" onClick={onClose}>
+          Close ✕
+        </button>
+      </div>
 
       <h2>{recipe.strMeal}</h2>
 

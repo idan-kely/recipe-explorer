@@ -10,6 +10,18 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  // טעינת מועדפים מ-localStorage בעליית האפליקציה
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('recipe_favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // שמירה ל-localStorage בכל פעם שרשימת המועדפים משתנה
+  useEffect(() => {
+    localStorage.setItem('recipe_favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
@@ -29,9 +41,22 @@ function App() {
       });
   }, []);
 
-  const filteredRecipes = recipes.filter((recipe) =>
-    recipe.strMeal.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
+    );
+  };
+
+  // סינון כפול: גם לפי החיפוש וגם לפי מועדפים
+  const filteredRecipes = recipes.filter((recipe) => {
+    const matchesSearch = recipe.strMeal
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesFavorite = showFavoritesOnly
+      ? favorites.includes(recipe.idMeal)
+      : true;
+    return matchesSearch && matchesFavorite;
+  });
 
   return (
     <div className="app-container">
@@ -39,6 +64,9 @@ function App() {
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
         totalCount={filteredRecipes.length}
+        showFavoritesOnly={showFavoritesOnly}
+        onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+        favoritesCount={favorites.length}
       />
 
       <main className="main-layout">
@@ -56,6 +84,8 @@ function App() {
             <RecipeDetail
               recipe={selectedRecipe}
               onClose={() => setSelectedRecipe(null)}
+              isFavorite={selectedRecipe ? favorites.includes(selectedRecipe.idMeal) : false}
+              onToggleFavorite={toggleFavorite}
             />
           </>
         )}

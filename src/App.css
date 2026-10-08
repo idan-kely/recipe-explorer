@@ -296,3 +296,63 @@ body {
     width: 100%;
   }
 }
+/* Favorites Filter Bar */
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.favorites-filter-btn {
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  padding: 11px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.favorites-filter-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.favorites-filter-btn.active {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+/* Detail Actions */
+.detail-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.favorite-btn {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.favorite-btn:hover {
+  border-color: #ef4444;
+}
+
+.favorite-btn.favorited {
+  background-color: #fef2f2;
+  border-color: #ef4444;
+  color: #ef4444;
+}
