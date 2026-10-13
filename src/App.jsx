@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import RecipeList from './components/RecipeList';
 import RecipeDetail from './components/RecipeDetail';
@@ -10,15 +10,30 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
 
-  // טעינת מועדפים מ-localStorage בעליית האפליקציה
+  // מצב Dark Mode שמור ב-localStorage
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('recipe_dark_mode') === 'true';
+  });
+
+  // החלת class של Dark Mode על אלמנט הבסיס ושמירה ב-localStorage
+  useEffect(() => {
+    localStorage.setItem('recipe_dark_mode', darkMode);
+    if (darkMode) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  }, [darkMode]);
+
+  // מועדפים שמורים ב-localStorage
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('recipe_favorites');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // שמירה ל-localStorage בכל פעם שרשימת המועדפים משתנה
   useEffect(() => {
     localStorage.setItem('recipe_favorites', JSON.stringify(favorites));
   }, [favorites]);
@@ -41,21 +56,29 @@ function App() {
       });
   }, []);
 
+  // חילוץ רשימת קטגוריות ייחודיות מתוך המתכונים שהתקבלו
+  const categories = useMemo(() => {
+    const cats = recipes.map((r) => r.strCategory).filter(Boolean);
+    return Array.from(new Set(cats)).sort();
+  }, [recipes]);
+
   const toggleFavorite = (id) => {
     setFavorites((prev) =>
       prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id]
     );
   };
 
-  // סינון כפול: גם לפי החיפוש וגם לפי מועדפים
+  // סינון משולב: חיפוש טקסטואלי, קטגוריה ומועדפים
   const filteredRecipes = recipes.filter((recipe) => {
     const matchesSearch = recipe.strMeal
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
+    const matchesCategory =
+      selectedCategory === 'All' || recipe.strCategory === selectedCategory;
     const matchesFavorite = showFavoritesOnly
       ? favorites.includes(recipe.idMeal)
       : true;
-    return matchesSearch && matchesFavorite;
+    return matchesSearch && matchesCategory && matchesFavorite;
   });
 
   return (
@@ -63,10 +86,15 @@ function App() {
       <Header
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        categories={categories}
         totalCount={filteredRecipes.length}
         showFavoritesOnly={showFavoritesOnly}
         onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
         favoritesCount={favorites.length}
+        darkMode={darkMode}
+        onToggleDarkMode={() => setDarkMode(!darkMode)}
       />
 
       <main className="main-layout">

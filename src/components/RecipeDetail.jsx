@@ -7,7 +7,7 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
     );
   }
 
-  // איסוף המצרכים
+  // איסוף מצרכים וכמויות
   const ingredients = [];
   for (let i = 1; i <= 20; i++) {
     const ingredient = recipe[`strIngredient${i}`];
@@ -20,7 +20,7 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
     }
   }
 
-  // חלוקת ההוראות לשלבים נקיים ומחוברים היטב
+  // חלוקת ההוראות לשלבים מסודרים
   let steps = [];
   if (recipe.strInstructions) {
     const lines = recipe.strInstructions
@@ -28,26 +28,21 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
       .map((l) => l.trim())
       .filter((l) => {
         if (!l) return false;
-        // סינון שורות שהן רק מספר
         if (/^\d+[\s.:-]*$/.test(l)) return false;
-        // סינון שורות שהן רק STEP X
         if (/^step\s*\d+[:.-]*$/i.test(l)) return false;
         return true;
       });
 
-    // מעבר על השורות וחיבור כותרות (כמו "Pro Tips:") למשפט שבא אחריהן
     const mergedLines = [];
     for (let i = 0; i < lines.length; i++) {
       let current = lines[i];
-
-      // אם השורה מסתיימת בנקודתיים או שהיא קצרה מאוד ויש שורה אחריה - נאחד אותה עם השורה הבאה
       if (
         (current.endsWith(':') || current.length < 15) &&
         i + 1 < lines.length &&
         !/^\d+$/.test(lines[i + 1])
       ) {
         mergedLines.push(`${current} ${lines[i + 1]}`);
-        i++; // מדלגים על השורה הבאה כי איחדנו אותה
+        i++;
       } else {
         mergedLines.push(current);
       }
@@ -56,13 +51,12 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
     steps = mergedLines
       .map((line) =>
         line
-          .replace(/^step\s*\d+[:.-]?\s*/i, '') // מנקה Step 1:
-          .replace(/^\d+[\s.:-]+\s*/, '') // מנקה 1.
+          .replace(/^step\s*\d+[:.-]?\s*/i, '')
+          .replace(/^\d+[\s.:-]+\s*/, '')
           .trim()
       )
-      .filter((line) => line.length > 5); // מסנן שורות קצרות וריקות
+      .filter((line) => line.length > 5);
 
-    // אם קיבלנו פסקה אחת ארוכה בלי ירידות שורה
     if (steps.length === 1 && steps[0].length > 150) {
       steps = steps[0]
         .split(/(?<=[.!?])\s+/)
@@ -78,10 +72,10 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
           className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
           onClick={() => onToggleFavorite(recipe.idMeal)}
         >
-          {isFavorite ? '❤️ Favorited' : '🤍 Add to Favorites'}
+          {isFavorite ? 'Favorited' : 'Add to Favorites'}
         </button>
         <button className="close-btn" onClick={onClose}>
-          Close ✕
+          Close
         </button>
       </div>
 
@@ -97,6 +91,19 @@ export default function RecipeDetail({ recipe, onClose, isFavorite, onToggleFavo
         <span className="tag">Category: {recipe.strCategory}</span>
         <span className="tag">Area: {recipe.strArea}</span>
       </div>
+
+      {recipe.strYoutube && (
+        <div className="video-link-container">
+          <a
+            href={recipe.strYoutube}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="youtube-btn"
+          >
+            Watch Video Tutorial
+          </a>
+        </div>
+      )}
 
       {ingredients.length > 0 && (
         <div className="ingredients-section">
